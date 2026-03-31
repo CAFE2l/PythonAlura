@@ -48,9 +48,23 @@ estilos = {
 }
 from time import sleep
 
-converte = "Convertor de Número em Extensos"
+converte = "Bem vindo ao jogo de Adivinhação"
 
 print(f"{estilos['negrito']}{cores['azul']}{'==='*5+'=='}{cores['cinza']}EXTENSO{cores['limpa']}{cores['cinza']}{estilos['negrito']}{cores['verde']}{'==='*5}{estilos['reset']}")
 print(f"{cores['cinza']}{estilos['negrito']}{cores['cinza']}{converte.center(39)}{estilos['reset']}")
 print(f"{cores['vermelho']}{estilos['negrito']}{"==="*13}{estilos['reset']}")
 
+
+numero_secreto = 42
+chute_str = int(input(f"Digite um número: "))
+print("você digitou", chute_str)
+
+if(numero_secreto == chute_str):
+    print('voce acertou')
+else:
+    if(chute_str > numero_secreto):
+        print(f"Você erro! O seu chute foi maior do que o número secreto")
+    elif(chute_str < numero_secreto):
+        print(f"Você erro! O seu chute foi menor do que o número secreto")
+
+print("Fim do jogo")
