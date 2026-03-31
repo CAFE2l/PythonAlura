@@ -53,18 +53,25 @@ converte = "Bem vindo ao jogo de Adivinhação"
 print(f"{estilos['negrito']}{cores['azul']}{'==='*5+'=='}{cores['cinza']}EXTENSO{cores['limpa']}{cores['cinza']}{estilos['negrito']}{cores['verde']}{'==='*5}{estilos['reset']}")
 print(f"{cores['cinza']}{estilos['negrito']}{cores['cinza']}{converte.center(39)}{estilos['reset']}")
 print(f"{cores['vermelho']}{estilos['negrito']}{"==="*13}{estilos['reset']}")
-
-
 numero_secreto = 42
-chute_str = int(input(f"Digite um número: "))
-print("você digitou", chute_str)
+total_de_tentativas = 3
 
-if(numero_secreto == chute_str):
-    print('voce acertou')
-else:
-    if(chute_str > numero_secreto):
-        print(f"Você erro! O seu chute foi maior do que o número secreto")
-    elif(chute_str < numero_secreto):
-        print(f"Você erro! O seu chute foi menor do que o número secreto")
+for rodada in range(1, total_de_tentativas + 1):
+    print(f"{estilos['negrito']}{cores['cinza']}Tentativa {cores['vermelho']}{rodada}{cores['cinza']} de{cores['vermelho']} {total_de_tentativas}"))
 
-print("Fim do jogo")
+    chute = int(input(f"{cores['cinza']}Digite o seu número: "))
+    print(f"voce digitou {cores['roxo']}{chute}")
+
+    acertou = chute == numero_secreto
+    maior = chute > numero_secreto
+    menor = chute < numero_secreto
+
+    if(acertou):
+        print(f"{cores['verde']}{estilos['italico']}Parabéns! Você acertou!{cores['limpa']}")
+    else:
+        if(maior):
+            print(f"{estilos['negrito']}O seu chute foi maior do que o número secreto!")
+        elif(menor):
+            print("{estilos['negrito']}O seu chute foi menor do que o número secreto!")
+
+print(f"{cores['vermelho']}Fim do jogo")
