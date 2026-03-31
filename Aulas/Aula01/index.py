@@ -57,21 +57,26 @@ numero_secreto = 42
 total_de_tentativas = 3
 
 for rodada in range(1, total_de_tentativas + 1):
-    print(f"{estilos['negrito']}{cores['cinza']}Tentativa {cores['vermelho']}{rodada}{cores['cinza']} de{cores['vermelho']} {total_de_tentativas}"))
+    print(f"{estilos['negrito']}{cores['cinza']}Tentativa {cores['vermelho']}{rodada}{cores['cinza']} de{cores['vermelho']} {total_de_tentativas}")
 
-    chute = int(input(f"{cores['cinza']}Digite o seu número: "))
+    chute = int(input(f"{cores['cinza']}Digite um número entre 1 e 100: "))
     print(f"voce digitou {cores['roxo']}{chute}")
-
+    
+    if(chute < 1 or chute > 100):
+        print(f"{cores['vermelho']}voce deve digitar um numero entre 1 e 100")
+        continue
+    
     acertou = chute == numero_secreto
     maior = chute > numero_secreto
     menor = chute < numero_secreto
 
     if(acertou):
         print(f"{cores['verde']}{estilos['italico']}Parabéns! Você acertou!{cores['limpa']}")
+        break
     else:
         if(maior):
             print(f"{estilos['negrito']}O seu chute foi maior do que o número secreto!")
         elif(menor):
             print("{estilos['negrito']}O seu chute foi menor do que o número secreto!")
 
-print(f"{cores['vermelho']}Fim do jogo")
+print(f"{cores['vermelho']}Fim do jogo{cores['limpa']}")
