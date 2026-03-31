@@ -1,3 +1,5 @@
+import forca 
+import adivinha
 
 cores = {
     "limpa": "\033[m",
@@ -46,10 +48,23 @@ estilos = {
     "visivel": "\033[28m",
     "sem_tachado": "\033[29m"
 }
+def escolhe_jogo():
+    converte = "Escolha o seu jogo"
 
-converte = "Bem vindo ao jogo da forca"
+    print(f"{estilos['negrito']}{cores['azul']}{'==='*5+'=='}{cores['cinza']}EXTENSO{cores['limpa']}{cores['cinza']}{estilos['negrito']}{cores['verde']}{'==='*5}{estilos['reset']}")
+    print(f"{cores['cinza']}{estilos['negrito']}{cores['cinza']}{converte.center(39)}{estilos['reset']}")
+    print(f"{cores['vermelho']}{estilos['negrito']}{'==='*13}{estilos['reset']}")
 
-print(f"{estilos['negrito']}{cores['azul']}{'==='*5+'=='}{cores['cinza']}EXTENSO{cores['limpa']}{cores['cinza']}{estilos['negrito']}{cores['verde']}{'==='*5}{estilos['reset']}")
-print(f"{cores['cinza']}{estilos['negrito']}{cores['cinza']}{converte.center(39)}{estilos['reset']}")
-print(f"{cores['vermelho']}{estilos['negrito']}{'==='*13}{estilos['reset']}")
+    print(f"(1) Forca (2) Adivinhação")
 
+    jogo = int(input(f"Qual jogo?"))
+
+    if(jogo == 1):
+        print("Jogando Forca")
+        forca.jogo_forca()
+    elif(jogo == 2):
+        print("Jogando Adivinhação")
+        adivinha.jogo_adivinha()
+
+if(__name__ == "__main__"):
+    escolhe_jogo()
