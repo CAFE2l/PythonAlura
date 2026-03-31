@@ -1,3 +1,5 @@
+import random
+from time import sleep
 
 cores = {
     "limpa": "\033[m",
@@ -38,27 +40,40 @@ estilos = {
     "inverso": "\033[7m",
     "invisivel": "\033[8m",
     "tachado": "\033[9m",
-    "duplosublinhado": "\033[21m",  # Sublinhado duplo
-    "normal": "\033[22m",           # Desativa negrito e fraco
-    "semitalico": "\033[23m",       # Desativa itálico
-    "sem_sublinhado": "\033[24m",   # Desativa sublinhado
-    "sem_inverso": "\033[27m",      # Desativa inverso
-    "visivel": "\033[28m",          # Desativa invisível
-    "sem_tachado": "\033[29m"       # Desativa tachado
+    "duplosublinhado": "\033[21m",
+    "normal": "\033[22m",
+    "semitalico": "\033[23m",
+    "sem_sublinhado": "\033[24m",
+    "sem_inverso": "\033[27m",
+    "visivel": "\033[28m",
+    "sem_tachado": "\033[29m"
 }
-from time import sleep
 
 converte = "Bem vindo ao jogo de Adivinhação"
 
 print(f"{estilos['negrito']}{cores['azul']}{'==='*5+'=='}{cores['cinza']}EXTENSO{cores['limpa']}{cores['cinza']}{estilos['negrito']}{cores['verde']}{'==='*5}{estilos['reset']}")
 print(f"{cores['cinza']}{estilos['negrito']}{cores['cinza']}{converte.center(39)}{estilos['reset']}")
-print(f"{cores['vermelho']}{estilos['negrito']}{"==="*13}{estilos['reset']}")
-numero_secreto = 42
-total_de_tentativas = 3
+print(f"{cores['vermelho']}{estilos['negrito']}{'==='*13}{estilos['reset']}")
+
+numero_secreto = random.randrange(1, 101)
+total_de_tentativas = 0
+pontos = 1000
+
+print(f"{cores['cinza']}{estilos['negrito']}Qual nível de dificuldade?{numero_secreto}")
+print(f"{cores['verde']}(1) {cores['cinza']}Fácil {cores['amarelo']}(2){cores['cinza']} Médio {cores['vermelho']}(3) {cores['cinza']}Difícil")
+
+nivel = int(input(f"Escolha um nível: "))  # Corrigido: removido numero_secreto
+
+if(nivel == 1):
+    total_de_tentativas = 10
+elif(nivel == 2): 
+    total_de_tentativas = 7
+else:
+    total_de_tentativas = 3
 
 for rodada in range(1, total_de_tentativas + 1):
     print(f"{estilos['negrito']}{cores['cinza']}Tentativa {cores['vermelho']}{rodada}{cores['cinza']} de{cores['vermelho']} {total_de_tentativas}")
-
+    
     chute = int(input(f"{cores['cinza']}Digite um número entre 1 e 100: "))
     print(f"voce digitou {cores['roxo']}{chute}")
     
@@ -71,12 +86,14 @@ for rodada in range(1, total_de_tentativas + 1):
     menor = chute < numero_secreto
 
     if(acertou):
-        print(f"{cores['verde']}{estilos['italico']}Parabéns! Você acertou!{cores['limpa']}")
+        print(f"{cores['verde']}{estilos['italico']}Parabéns! Você acertou e fez {pontos}{cores['limpa']}")
         break
     else:
         if(maior):
             print(f"{estilos['negrito']}O seu chute foi maior do que o número secreto!")
         elif(menor):
-            print("{estilos['negrito']}O seu chute foi menor do que o número secreto!")
+            print(f"{estilos['negrito']}O seu chute foi menor do que o número secreto!")
+        pontos_perdidos = abs(numero_secreto - chute)
+        pontos -= pontos_perdidos
 
 print(f"{cores['vermelho']}Fim do jogo{cores['limpa']}")
