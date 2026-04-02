@@ -54,8 +54,11 @@ def jogo_forca():
     print(f"{cores['vermelho']}{estilos['negrito']}{'==='*13}{estilos['reset']}")
 
     palavra_secreta = "banana"
+    letras_acertadas = ["_", "_", "_","_", "_", "_"]
     enforcou = False
     acertou = False 
+
+    print(letras_acertadas)
     #enquanto (True)
     while(not enforcou and not acertou):
 
@@ -66,6 +69,9 @@ def jogo_forca():
         for letra in palavra_secreta:
             if(chute.upper() == letra.upper()):
                 print(f"{estilos['negrito']}{cores['cinza']}Encontrei a letra {cores['azul']}{letra}{cores['cinza']} na posição {cores['vermelho']}{index}{cores['cinza']}")
+
+                letras_acertadas[index] = letra
+                print(letras_acertadas)
             index += 1;
 
         print("jogando...")
