@@ -58,6 +58,16 @@ def jogo_forca():
     acertou = False 
     #enquanto (True)
     while(not enforcou and not acertou):
+
+        chute = input("Qual a leta? ")
+        chute = chute.strip()
+        index = 0 
+
+        for letra in palavra_secreta:
+            if(chute.upper() == letra.upper()):
+                print(f"{estilos['negrito']}{cores['cinza']}Encontrei a letra {cores['azul']}{letra}{cores['cinza']} na posição {cores['vermelho']}{index}{cores['cinza']}")
+            index += 1;
+
         print("jogando...")
 
 
