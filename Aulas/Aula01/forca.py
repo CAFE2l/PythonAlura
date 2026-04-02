@@ -1,4 +1,3 @@
-
 cores = {
     "limpa": "\033[m",
     'vermelho': "\033[31m",
@@ -46,6 +45,7 @@ estilos = {
     "visivel": "\033[28m",
     "sem_tachado": "\033[29m"
 }
+
 def jogo_forca():
     converte = "Bem vindo ao jogo da forca"
 
@@ -53,32 +53,55 @@ def jogo_forca():
     print(f"{cores['cinza']}{estilos['negrito']}{cores['cinza']}{converte.center(39)}{estilos['reset']}")
     print(f"{cores['vermelho']}{estilos['negrito']}{'==='*13}{estilos['reset']}")
 
-    palavra_secreta = "banana"
-    letras_acertadas = ["_", "_", "_","_", "_", "_"]
+    palavra_secreta = "uva"
+    letras_acertadas = ["_" for letra in palavra_secreta]
     enforcou = False
     acertou = False 
+    erros = 0
 
     print(letras_acertadas)
-    #enquanto (True)
-    while(not enforcou and not acertou):
+    
+    while not enforcou and not acertou:
+        chute = input("Qual a letra? ")
+        chute = chute.strip().lower()  # Converte para minúsculo
+        
+        # Verifica se o chute já foi descoberto
+        if chute in letras_acertadas:
+            print(f"{cores['amarelo']}Você já acertou essa letra!{cores['limpa']}")
+            continue
+            
+        # Verifica se o chute está na palavra
+        if chute in palavra_secreta:
+            print(f"{estilos['negrito']}{cores['cinza']}Encontrei a letra {cores['azul']}{chute}{cores['cinza']} na(s) posição(ões):", end=" ")
+            
+            encontrou = False
+            for index, letra in enumerate(palavra_secreta):
+                if chute == letra:
+                    letras_acertadas[index] = letra
+                    print(f"{cores['vermelho']}{index}{cores['cinza']}", end=" ")
+                    encontrou = True
+            print()  # Pula linha após mostrar as posições
+        else:
+            erros += 1
+            print(f"{cores['vermelho']}Letra '{chute}' não encontrada! Erros: {erros}/6{cores['limpa']}")
+        
+        # Verifica se enforcou
+        enforcou = erros == 6
+        
+        # Verifica se acertou todas as letras
+        acertou = "_" not in letras_acertadas
+        
+        # Mostra o progresso atual
+        print(f"\nPalavra: {' '.join(letras_acertadas)}")
+        print(f"Erros restantes: {6 - erros}\n")
+    
+    # Fim do jogo
+    if acertou:
+        print(f"{cores['verde']}{estilos['negrito']}Parabéns! Você ganhou! A palavra era {palavra_secreta}{cores['limpa']}")
+    else:
+        print(f"{cores['vermelho']}{estilos['negrito']}Você foi enforcado! A palavra era {palavra_secreta}{cores['limpa']}")
+    
+    print(f"{cores['vermelho']}{estilos['negrito']}fim de jogo{cores['limpa']}")
 
-        chute = input("Qual a leta? ")
-        chute = chute.strip()
-        index = 0 
-
-        for letra in palavra_secreta:
-            if(chute.upper() == letra.upper()):
-                print(f"{estilos['negrito']}{cores['cinza']}Encontrei a letra {cores['azul']}{letra}{cores['cinza']} na posição {cores['vermelho']}{index}{cores['cinza']}")
-
-                letras_acertadas[index] = letra
-                print(letras_acertadas)
-            index += 1;
-
-        print("jogando...")
-
-
-
-
-if(__name__ == "__main__"):
+if __name__ == "__main__":
     jogo_forca()
-
