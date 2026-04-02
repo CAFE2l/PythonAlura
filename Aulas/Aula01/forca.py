@@ -53,5 +53,16 @@ def jogo_forca():
     print(f"{cores['cinza']}{estilos['negrito']}{cores['cinza']}{converte.center(39)}{estilos['reset']}")
     print(f"{cores['vermelho']}{estilos['negrito']}{'==='*13}{estilos['reset']}")
 
+    palavra_secreta = "banana"
+    enforcou = False
+    acertou = False 
+    #enquanto (True)
+    while(not enforcou and not acertou):
+        print("jogando...")
+
+
+
+
 if(__name__ == "__main__"):
     jogo_forca()
+
