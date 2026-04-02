@@ -1,3 +1,6 @@
+import random
+from pathlib import Path  # Adicionado para localizar arquivo corretamente
+
 cores = {
     "limpa": "\033[m",
     'vermelho': "\033[31m",
@@ -45,25 +48,58 @@ estilos = {
     "visivel": "\033[28m",
     "sem_tachado": "\033[29m"
 }
-
-def jogo_forca():
-    converte = "Bem vindo ao jogo da forca"
-
+def imprime_mensagem_aberutra():
+    converte = "Bem vindo ao jogo da forca"   
     print(f"{estilos['negrito']}{cores['azul']}{'==='*5+'=='}{cores['cinza']}EXTENSO{cores['limpa']}{cores['cinza']}{estilos['negrito']}{cores['verde']}{'==='*5}{estilos['reset']}")
     print(f"{cores['cinza']}{estilos['negrito']}{cores['cinza']}{converte.center(39)}{estilos['reset']}")
     print(f"{cores['vermelho']}{estilos['negrito']}{'==='*13}{estilos['reset']}")
+    
+def jogo_forca():
 
-    palavra_secreta = "uva"
+    imprime_mensagem_aberutra()
+    # Carrega as palavras do arquivo (usando pathlib para garantir o caminho correto)
+    try:
+        # Garante que o arquivo seja buscado no mesmo diretório do script
+        caminho_arquivo = Path(__file__).parent / "palavras.txt"
+        arquivo = open(caminho_arquivo, "r", encoding="utf-8")
+        palavras = []
+        for linha in arquivo:
+            linha = linha.strip()
+            if linha:  # Ignora linhas vazias
+                palavras.append(linha)
+        arquivo.close()
+        
+        # Verifica se o arquivo tem palavras
+        if not palavras:
+            print(f"{cores['vermelho']}Erro: Arquivo palavras.txt está vazio!{cores['limpa']}")
+            return
+            
+    except FileNotFoundError:
+        print(f"{cores['vermelho']}Erro: Arquivo palavras.txt não encontrado!{cores['limpa']}")
+        print(f"Procurei em: {caminho_arquivo}")
+        print("Crie um arquivo palavras.txt com uma palavra por linha.")
+        return
+    
+    # Sorteia uma palavra aleatória
+    numero = random.randrange(0, len(palavras))
+    palavra_secreta = palavras[numero].lower()
+    
+    # Cria a lista de letras acertadas
     letras_acertadas = ["_" for letra in palavra_secreta]
     enforcou = False
     acertou = False 
     erros = 0
 
-    print(letras_acertadas)
+    print(f"\nPalavra com {len(palavra_secreta)} letras: {' '.join(letras_acertadas)}\n")
     
     while not enforcou and not acertou:
         chute = input("Qual a letra? ")
-        chute = chute.strip().lower()  # Converte para minúsculo
+        chute = chute.strip().lower()
+        
+        # Valida se o usuário digitou uma letra
+        if len(chute) != 1 or not chute.isalpha():
+            print(f"{cores['amarelo']}Digite apenas uma letra!{cores['limpa']}")
+            continue
         
         # Verifica se o chute já foi descoberto
         if chute in letras_acertadas:
@@ -74,13 +110,11 @@ def jogo_forca():
         if chute in palavra_secreta:
             print(f"{estilos['negrito']}{cores['cinza']}Encontrei a letra {cores['azul']}{chute}{cores['cinza']} na(s) posição(ões):", end=" ")
             
-            encontrou = False
             for index, letra in enumerate(palavra_secreta):
                 if chute == letra:
                     letras_acertadas[index] = letra
                     print(f"{cores['vermelho']}{index}{cores['cinza']}", end=" ")
-                    encontrou = True
-            print()  # Pula linha após mostrar as posições
+            print()
         else:
             erros += 1
             print(f"{cores['vermelho']}Letra '{chute}' não encontrada! Erros: {erros}/6{cores['limpa']}")
@@ -94,13 +128,44 @@ def jogo_forca():
         # Mostra o progresso atual
         print(f"\nPalavra: {' '.join(letras_acertadas)}")
         print(f"Erros restantes: {6 - erros}\n")
-    
-    # Fim do jogo
+  
+
+    def imprime_mensagem_perdedor(palavra_secreta):
+        print("Puxa, você foi enforcado!")
+        print("A palavra era {}".format(palavra_secreta))
+        print("    _______________         ")
+        print("   /               \       ")
+        print("  /                 \      ")
+        print("//                   \/\  ")
+        print("\|   XXXX     XXXX   | /   ")
+        print(" |   XXXX     XXXX   |/     ")
+        print(" |   XXX       XXX   |      ")
+        print(" |                   |      ")
+        print(" \__      XXX      __/     ")
+        print("   |\     XXX     /|       ")
+        print("   | |           | |        ")
+        print("   | I I I I I I I |        ")
+        print("   |  I I I I I I  |        ")
+        print("   \_             _/       ")
+        print("     \_         _/         ")
+        print("       \_______/           ")
+        # Fim do jogo
+    def imprime_mensagem_vencedor():
+        print("Parabéns, você ganhou!")
+        print("       ___________      ")
+        print("      '._==_==_=_.'     ")
+        print("      .-\\:      /-.    ")
+        print("     | (|:.     |) |    ")
+        print("      '-|:.     |-'     ")
+        print("        \\::.    /      ")
+        print("         '::. .'        ")
+        print("           ) (          ")
+        print("         _.' '._        ")
+        print("        '-------'       ")
     if acertou:
-        print(f"{cores['verde']}{estilos['negrito']}Parabéns! Você ganhou! A palavra era {palavra_secreta}{cores['limpa']}")
+        imprime_mensagem_vencedor() 
     else:
-        print(f"{cores['vermelho']}{estilos['negrito']}Você foi enforcado! A palavra era {palavra_secreta}{cores['limpa']}")
-    
+        imprime_mensagem_perdedor()
     print(f"{cores['vermelho']}{estilos['negrito']}fim de jogo{cores['limpa']}")
 
 if __name__ == "__main__":

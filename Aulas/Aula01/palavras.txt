@@ -1,4 +1,8 @@
-morango
-melancia
 banana
-maça
+uva
+morango
+abacaxi
+laranja
+limao
+pera
+manga
