@@ -1,0 +1,8 @@
+banana
+uva
+morango
+abacaxi
+laranja
+limao
+pera
+manga
