@@ -18,3 +18,10 @@ usuarios = [
 
 for nome, _, _ in usuarios:
     print(nome)
+
+
+idades_crescente = sorted(idades)
+idades_decrescente = sorted(idades, reverse=True)
+
+print(idades_crescente)
+print(idades_decrescente)
